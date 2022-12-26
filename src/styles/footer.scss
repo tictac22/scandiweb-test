@@ -1,0 +1,13 @@
+@import "_variables.scss";
+
+.footer {
+	padding: 8px;
+	background: whitesmoke;
+	border-top: 1px solid $borderColor;
+
+	&__inner {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+}

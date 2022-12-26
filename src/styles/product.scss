@@ -1,0 +1,15 @@
+@import "_variables.scss";
+
+.product {
+	border: 1px solid $borderColor;
+
+	border-radius: 3px;
+	padding: 8px;
+	&__inner {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		margin: 10px 0px;
+	}
+}

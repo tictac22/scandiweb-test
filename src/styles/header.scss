@@ -1,0 +1,33 @@
+@import "_variables.scss";
+
+.header {
+	&__inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		border-bottom: 1px solid $borderColor;
+		padding: 15px 0px;
+	}
+	&__title {
+		font-weight: bold;
+		font-size: 16px;
+		@media (min-width: 330px) {
+			font-size: 22px;
+		}
+	}
+	&__buttons {
+		display: flex;
+		align-items: center;
+		&--add {
+			background-color: blue;
+
+			&:hover {
+				background-color: rgb(2, 2, 172);
+			}
+		}
+		&--delete {
+			margin-left: 10px;
+			background-color: rgb(205, 3, 3);
+		}
+	}
+}
