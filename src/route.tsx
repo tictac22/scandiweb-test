@@ -1,15 +1,16 @@
 import React from "react"
+import { RoutePaths } from "./utils/paths"
 
 const DynamicHome = React.lazy(() => import("./pages/Home").then((d) => ({ default: d.Home })))
-const DynamicAdd = React.lazy(() => import("./pages/Add").then((d) => ({ default: d.Add })))
+const DynamicAdd = React.lazy(() => import("./pages/AddProduct").then((d) => ({ default: d.AddProduct })))
 
 export const router = [
 	{
-		path: "/",
+		path: RoutePaths.Home,
 		element: <DynamicHome />,
 	},
 	{
-		path: "/add",
+		path: RoutePaths.AddProduct,
 		element: <DynamicAdd />,
 	},
 ]

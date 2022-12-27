@@ -3,7 +3,7 @@ export const Product = () => {
 	return (
 		<div className="product">
 			<div>
-				<input type="checkbox" />
+				<input type="checkbox" className=".delete-checkbox" />
 			</div>
 			<div className="product__inner">
 				<p>JVC200123</p>

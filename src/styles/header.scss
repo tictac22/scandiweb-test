@@ -29,5 +29,12 @@
 			margin-left: 10px;
 			background-color: rgb(205, 3, 3);
 		}
+		&--save {
+			background-color: blue;
+		}
+		&--cancel {
+			margin-left: 10px;
+			background-color: rgb(180, 178, 178);
+		}
 	}
 }

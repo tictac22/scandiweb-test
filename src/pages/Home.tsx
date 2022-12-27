@@ -1,5 +1,5 @@
+import "@styles/home.scss"
 import { Product } from "../components/Product"
-
 const array = new Array(10).fill(1)
 export const Home = () => {
 	return (

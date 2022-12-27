@@ -37,7 +37,6 @@ li {
 	list-style: none;
 }
 input {
-	border: none;
 	outline: none;
 }
 input::-webkit-input-placeholder {
@@ -113,12 +112,5 @@ address {
 	transition: background-color 0.3s linear;
 	@media (min-width: 330px) {
 		padding: 8px;
-	}
-}
-.products {
-	&__inner {
-		display: grid;
-		gap: 20px;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 	}
 }
