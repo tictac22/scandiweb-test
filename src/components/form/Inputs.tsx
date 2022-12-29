@@ -20,19 +20,32 @@ export const inputs: IFormInput[] = [
 ]
 
 export const FormInput = ({ name, validation, labelText, ...rest }: IFormInput) => {
+	const isNumberType = rest.type === "number"
 	const {
 		register,
 		control,
 		formState: { errors },
 	} = useFormContext<HookFormValues>()
-
 	return (
 		<div className="form__input input">
-			<input {...register(name)} {...validation} id={name} className="input__input" {...rest} />
+			<input
+				{...register(name, {
+					valueAsNumber: isNumberType || undefined,
+				})}
+				{...validation}
+				id={name}
+				className="input__input"
+				{...rest}
+			/>
 			<label htmlFor={name} className={`input__label ${errors[name] ? "input__label--error" : ""}`}>
 				{labelText}
 			</label>
 			<p className="input__error">{errors[name]?.message}</p>
 		</div>
 	)
+}
+function validate(value: string | number) {
+	console.log("validation", value)
+
+	return false
 }

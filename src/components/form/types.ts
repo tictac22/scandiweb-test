@@ -4,16 +4,18 @@ export type HookFormValues = {
 	sku: string
 	name: string
 	price: number
-	size: number
-	weigth: number
 	typeSwitcher: Switchers
-	width: number
-	height: number
-	length: number
+	swithcerParam: {
+		weigth?: number
+		size?: number
+		width?: number
+		height?: number
+		length?: number
+	}
 }
 export interface IFormInput {
 	name: string
-	type: string
+	type: "text" | "number"
 	labelText: string
 	validation?: { [key: string]: number | boolean }
 }

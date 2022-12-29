@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { useFormContext } from "react-hook-form"
 import { HookFormValues, ISwitcherForm } from "./types"
 
@@ -63,20 +64,31 @@ export const SwitchersFurniture: ISwitcherForm[] = [
 export const SwitcherForm = (props: ISwitcherForm) => {
 	const {
 		register,
+		unregister,
 		control,
 		formState: { errors },
 	} = useFormContext<HookFormValues>()
+	useEffect(() => {
+		return () => {
+			unregister(`swithcerParam.${props.name}`)
+		}
+	}, [])
 	return (
 		<div className="switcher">
 			<div className="form__input input">
 				<label
-					className={`input__label ${errors[props.name] ? "input__label--error" : ""}`}
+					className={`input__label ${errors.swithcerParam?.[props.name] ? "input__label--error" : ""}`}
 					htmlFor={props.name}
 				>
 					{props.labelText}
 				</label>
-				<input className="input__input" type="number" id={props.name} {...register(props.name)}></input>
-				<p className="input__error">{errors[props.name]?.message}</p>
+				<input
+					className="input__input"
+					type="number"
+					id={props.name}
+					{...register(`swithcerParam.${props.name}`, { valueAsNumber: true })}
+				></input>
+				<p className="input__error">{errors.swithcerParam?.[props.name]?.message}</p>
 			</div>
 			<p className="switcher__descr">{props.description}</p>
 		</div>

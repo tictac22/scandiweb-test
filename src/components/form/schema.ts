@@ -1,45 +1,32 @@
 import { z } from "zod"
 import { Switchers } from "./Switcher"
 
-export const schema = z
-	.object({
-		name: z.string().min(1, { message: "Name is required" }).trim(),
-		sku: z.string().min(1, { message: "Sku is required" }).trim(),
-		price: z.string().min(1, { message: "Price is required" }),
-		typeSwitcher: z.string().refine((value) => value !== Switchers.Default, { message: "Select the switcher" }),
-		size: z.string().optional(),
-		weight: z.string().optional(),
-		height: z.string().optional(),
-		width: z.string().optional(),
-		length: z.string().optional(),
-	})
-	.superRefine((schema, ctx) => {
-		if (schema.typeSwitcher === Switchers.Dvd && !schema.size) {
-			ctx.addIssue({
-				code: "custom",
-				message: "Size is Required",
-				path: ["size"],
-			})
+const customErrorMap: z.ZodErrorMap = (issue, ctx) => {
+	console.log(issue)
+	if (issue.code === z.ZodIssueCode.invalid_type) {
+		if (issue.expected === "number") {
+			return { message: capitalizeFirstLetter(issue.path[issue.path.length - 1] as string) + " is required" }
 		}
-		if (schema.typeSwitcher === Switchers.Book && !schema.weight) {
-			ctx.addIssue({
-				code: "custom",
-				message: "Size is Required",
-				path: ["weight"],
-			})
-		}
-		console.log(schema)
-		if (schema.typeSwitcher === Switchers.Furniture) {
-			const fields = ["Width", "Length", "Height"]
-			fields.forEach((item) => {
-				if (!schema[item.toLowerCase()]) {
-					ctx.addIssue({
-						code: "custom",
-						message: `${item} ` + "is Required",
-						path: [item.toLowerCase()],
-					})
-				}
-			})
-		}
-		return z.NEVER
-	})
+	}
+
+	return { message: ctx.defaultError }
+}
+
+const customNumber = z.number({ errorMap: customErrorMap })
+export const schema = z.object({
+	name: z.string().min(1, { message: "Name is required" }).trim(),
+	sku: z.string().min(1, { message: "Sku is required" }),
+	price: customNumber.min(1, { message: "price is required" }),
+	typeSwitcher: z.string().refine((value) => value !== Switchers.Default, { message: "Select the switcher" }),
+	swithcerParam: z.object({
+		size: customNumber.min(1, { message: "size is required" }).optional(),
+		weight: customNumber.min(1, { message: "weight is required" }).optional(),
+		height: customNumber.min(1, { message: "height is required" }).optional(),
+		width: customNumber.min(1, { message: "width is required" }).optional(),
+		length: customNumber.min(1, { message: "length is required" }).optional(),
+	}),
+})
+
+function capitalizeFirstLetter(string: string) {
+	return string.charAt(0).toUpperCase() + string.slice(1)
+}

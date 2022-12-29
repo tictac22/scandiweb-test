@@ -19,6 +19,7 @@ export const AddProduct = () => {
 		watch,
 		formState: { errors },
 	} = methods
+	console.log(errors)
 	const onSubmit = (data: HookFormValues) => {
 		console.log(data, "SERVER")
 	}
@@ -67,28 +68,22 @@ interface ISwitcher {
 	switcherType: Switchers
 }
 const Switcher = ({ switcherType }: ISwitcher) => {
-	return (
-		<div>
-			{(function () {
-				switch (switcherType) {
-					case Switchers.Dvd:
-						return <SwitcherForm {...SwitchersText[Switchers.Dvd]} />
-					case Switchers.Book:
-						return <SwitcherForm {...SwitchersText[Switchers.Book]} />
-					case Switchers.Furniture:
-						return (
-							<div className="switcher">
-								{SwitchersFurniture.map((item) => (
-									<SwitcherForm key={item.name} {...item} />
-								))}
+	switch (switcherType) {
+		case Switchers.Dvd:
+			return <SwitcherForm key="1" {...SwitchersText[Switchers.Dvd]} />
+		case Switchers.Book:
+			return <SwitcherForm key="2" {...SwitchersText[Switchers.Book]} />
+		case Switchers.Furniture:
+			return (
+				<div className="switcher">
+					{SwitchersFurniture.map((item) => (
+						<SwitcherForm key={item.name} {...item} />
+					))}
 
-								<p className="switcher__descr">Please, provide dimensions.</p>
-							</div>
-						)
-					default:
-						return ""
-				}
-			})()}
-		</div>
-	)
+					<p className="switcher__descr">Please, provide dimensions.</p>
+				</div>
+			)
+		default:
+			return <></>
+	}
 }
