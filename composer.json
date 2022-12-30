@@ -1,0 +1,15 @@
+{
+    "name": "artem/scanditest",
+    "autoload": {
+        "psr-4": {
+            "Artem\\Scanditest\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "tictac",
+            "email": "fominsartems947@gmail.com"
+        }
+    ],
+    "require": {}
+}

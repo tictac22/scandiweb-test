@@ -65,7 +65,6 @@ export const SwitcherForm = (props: ISwitcherForm) => {
 	const {
 		register,
 		unregister,
-		control,
 		formState: { errors },
 	} = useFormContext<HookFormValues>()
 	useEffect(() => {
