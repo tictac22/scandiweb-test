@@ -19,7 +19,6 @@ export const AddProduct = () => {
 		watch,
 		formState: { errors },
 	} = methods
-	console.log(errors)
 	const onSubmit = (data: HookFormValues) => {
 		console.log(data, "SERVER")
 	}

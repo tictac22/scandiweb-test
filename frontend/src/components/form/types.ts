@@ -6,11 +6,26 @@ export type HookFormValues = {
 	price: number
 	typeSwitcher: Switchers
 	swithcerParam: {
-		weigth?: number
-		size?: number
-		width?: number
-		height?: number
-		length?: number
+		size?: {
+			id: number
+			value: number
+		}
+		weight?: {
+			id: number
+			value: number
+		}
+		height?: {
+			id: number
+			value: number
+		}
+		width?: {
+			id: number
+			value: number
+		}
+		length?: {
+			id: number
+			value: number
+		}
 	}
 }
 export interface IFormInput {

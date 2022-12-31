@@ -67,6 +67,7 @@ export const SwitcherForm = (props: ISwitcherForm) => {
 		unregister,
 		formState: { errors },
 	} = useFormContext<HookFormValues>()
+	register(`swithcerParam.${props.name}.id`, { value: 3 })
 	useEffect(() => {
 		return () => {
 			unregister(`swithcerParam.${props.name}`)
@@ -85,9 +86,9 @@ export const SwitcherForm = (props: ISwitcherForm) => {
 					className="input__input"
 					type="number"
 					id={props.name}
-					{...register(`swithcerParam.${props.name}`, { valueAsNumber: true })}
+					{...register(`swithcerParam.${props.name}.value`, { valueAsNumber: true })}
 				></input>
-				<p className="input__error">{errors.swithcerParam?.[props.name]?.message}</p>
+				<p className="input__error">{errors.swithcerParam?.[props.name]?.value.message}</p>
 			</div>
 			<p className="switcher__descr">{props.description}</p>
 		</div>
