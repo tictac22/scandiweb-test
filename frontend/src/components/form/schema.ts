@@ -1,3 +1,4 @@
+import { capitalizeFirstLetter } from "@utils/functions"
 import { z } from "zod"
 import { Switchers } from "./Switcher"
 
@@ -52,7 +53,3 @@ export const schema = z.object({
 			.optional(),
 	}),
 })
-
-function capitalizeFirstLetter(string: string) {
-	return string.charAt(0).toUpperCase() + string.slice(1)
-}

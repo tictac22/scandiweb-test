@@ -1,7 +1,12 @@
-import { CREATE_PRODUCT } from "@utils/constants"
+import { CREATE_PRODUCT, GET_ALL_PRODUCTS } from "@utils/constants"
+import { Product } from "@utils/interfaces"
+import { wrapPromise } from "@utils/wrapPromise"
 
 export class ProductService {
-	static async createProduct<T>(body: T) {
+	static getAll() {
+		return wrapPromise<Product[]>(this.fetchAllProducts())
+	}
+	static async create<T>(body: T) {
 		const request = await fetch(CREATE_PRODUCT, {
 			method: "POST",
 			body: JSON.stringify(body),
@@ -12,6 +17,10 @@ export class ProductService {
 				throw new Error(response.sku)
 			}
 		}
-		//const response = await request.json()
+	}
+	private static async fetchAllProducts() {
+		const request = await fetch(GET_ALL_PRODUCTS)
+		const response: Product[] = await request.json()
+		return response
 	}
 }

@@ -56,7 +56,8 @@ class Repository extends Db {
 			$attributeQuery->execute();
 			$this->commit();
 	}
-	private function formatParams(string $id,array $fields):string {	    
+	private function formatParams(string $id,array $fields):string 
+	{	    
 		$formatParams = '';
 
 		foreach($fields as $param) {
@@ -65,5 +66,13 @@ class Repository extends Db {
 		}
 
 		return substr($formatParams,0,-1);
+	}
+
+	function deleteProducts(array $ids) 
+	{
+		$in  = str_repeat('?,', count($ids) - 1) . '?';
+		$sql = "DELETE FROM product WHERE product_id in ($in)";
+		$query = $this->prepare($sql);
+		$query->execute($ids);
 	}
 }

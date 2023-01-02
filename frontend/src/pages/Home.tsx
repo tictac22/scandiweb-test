@@ -1,5 +1,6 @@
+import { Products } from "@components/Products"
 import "@styles/home.scss"
-import { Product } from "../components/Product"
+import { Suspense } from "react"
 const array = new Array(10).fill(1)
 export const Home = () => {
 	return (
@@ -7,9 +8,9 @@ export const Home = () => {
 			<div className="products">
 				<div className="container">
 					<div className="products__inner">
-						{array.map((item, index) => (
-							<Product key={index} />
-						))}
+						<Suspense fallback={<div></div>}>
+							<Products />
+						</Suspense>
 					</div>
 				</div>
 			</div>

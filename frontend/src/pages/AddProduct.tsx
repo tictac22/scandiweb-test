@@ -6,6 +6,7 @@ import { FormProvider, useForm } from "react-hook-form"
 import { schema } from "@components/form/schema"
 import { HookFormValues } from "@components/form/types"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { RoutePaths } from "@utils/paths"
 import { ProductService } from "@utils/services/product"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
@@ -29,8 +30,8 @@ export const AddProduct = () => {
 	const onSubmit = async (body: HookFormValues) => {
 		try {
 			setLoading(true)
-			await ProductService.createProduct<HookFormValues>(body)
-			navigate("/")
+			await ProductService.create<HookFormValues>(body)
+			navigate(RoutePaths.Home)
 		} catch (error) {
 			setError("sku", { message: error.message })
 			setLoading(false)

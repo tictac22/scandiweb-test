@@ -1,16 +1,59 @@
 import "@styles/product.scss"
-export const Product = () => {
+import { Attributes as IAttributes, Product as IProduct } from "@utils/interfaces"
+export const Product = (props: IProduct) => {
 	return (
 		<div className="product">
 			<div>
 				<input type="checkbox" className=".delete-checkbox" />
 			</div>
 			<div className="product__inner">
-				<p>JVC200123</p>
-				<p>Acme DISC</p>
-				<p>1.00$</p>
-				<p>Size: 700mb</p>
+				<p>{props.product_sku}</p>
+				<p>{props.name}</p>
+				<p>{props.price} $</p>
+				<Attributes {...props.attributes} />
 			</div>
 		</div>
 	)
+}
+
+function Attributes(attributes: IAttributes) {
+	if (attributes.length) {
+		return (
+			<>
+				<div>
+					<p>
+						{AttributesDescription.dimensions.text} {Object.values(attributes).join("x")}
+					</p>
+				</div>
+			</>
+		)
+	}
+	return (
+		<>
+			{Object.keys(attributes).map((item) => {
+				const text = AttributesDescription[item]
+				return (
+					<div key={item}>
+						<p>
+							{text?.text} {attributes[item]} {text?.measurement}
+						</p>
+					</div>
+				)
+			})}
+		</>
+	)
+}
+
+const AttributesDescription = {
+	size: {
+		text: "Size:",
+		measurement: "MB",
+	},
+	weight: {
+		text: "Weight:",
+		measurement: "KG",
+	},
+	dimensions: {
+		text: "Dimensions:",
+	},
 }
