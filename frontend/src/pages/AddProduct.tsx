@@ -6,8 +6,14 @@ import { FormProvider, useForm } from "react-hook-form"
 import { schema } from "@components/form/schema"
 import { HookFormValues } from "@components/form/types"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { ProductService } from "@utils/services/product"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { Spinner } from "../assets/Spinner"
 
 export const AddProduct = () => {
+	const navigate = useNavigate()
+	const [loading, setLoading] = useState(false)
 	const methods = useForm<HookFormValues>({
 		resolver: zodResolver(schema),
 		criteriaMode: "all",
@@ -21,19 +27,14 @@ export const AddProduct = () => {
 		setError,
 	} = methods
 	const onSubmit = async (body: HookFormValues) => {
-		const request = await fetch("http://localhost/scanditest/createProduct", {
-			method: "POST",
-			body: JSON.stringify(body),
-		})
-		if (!request.ok) {
-			const response = await request.json()
-			console.log(response)
-			if (response?.sku) {
-				setError("sku", { message: response.sku })
-			}
-			console.log(response.error)
+		try {
+			setLoading(true)
+			await ProductService.createProduct<HookFormValues>(body)
+			navigate("/")
+		} catch (error) {
+			setError("sku", { message: error.message })
+			setLoading(false)
 		}
-		const response = await request.json()
 	}
 	const switcher = watch("typeSwitcher")
 
@@ -69,6 +70,12 @@ export const AddProduct = () => {
 							</div>
 							<Switcher switcherType={switcher} />
 						</form>
+						{loading && (
+							<div>
+								<p className="loading">Creating product ...</p>
+								<Spinner />
+							</div>
+						)}
 					</FormProvider>
 				</div>
 			</div>

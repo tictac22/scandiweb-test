@@ -13,11 +13,11 @@ class Repository extends Db {
 		GROUP_CONCAT(attribute.name) AS attributes, 
 		GROUP_CONCAT(product_attribute.value) AS attributes__value 
 		FROM product 
-		LEFT JOIN product_attribute USING(product_sku) 
+		LEFT JOIN product_attribute USING(product_id) 
 		LEFT JOIN attribute ON product_attribute.attribute_id = attribute.attribute_id 
-		GROUP BY(product_sku)';
+		GROUP BY(product_id)';
 
-		$query = $this->db->prepare($sql);
+		$query = $this->prepare($sql);
 		$query->execute();
 		$result = $query->fetchAll();
 
@@ -36,33 +36,32 @@ class Repository extends Db {
 	}
 
 	function createProduct(array $fields) 
-	{	
-			$this->db->beginTransaction();
-		
+	{		
+			$this->beginTransaction();
 			$productSql = 'INSERT INTO product (product_sku, name, price) VALUES (:sku,:name,:price)';
 			
-			$productQuery = $this->db->prepare($productSql);
+			$productQuery = $this->prepare($productSql);
 			$productQuery->execute(
 				[	'name' => $fields['name'],
 					'price' => $fields['price'],
 					'sku' => $fields['sku']
 				]);
 			
-				
-			$sqlProduct_Attribute = 'INSERT INTO product_attribute (product_sku, attribute_id, value) VALUES';
-			$sqlProduct_Attribute .= $this->formatParams($fields['swithcerParam'],$fields['sku']);
+			$id = $this->lastInsertId();
 
-			$productQuery = $this->db->prepare($sqlProduct_Attribute);
-			$productQuery->execute();
-				
-			$this->db->commit();
+			$sqlProduct_Attribute = 'INSERT INTO product_attribute (product_id, attribute_id, value) VALUES';
+			$sqlProduct_Attribute .= $this->formatParams($id,$fields['swithcerParam']);
+
+			$attributeQuery = $this->prepare($sqlProduct_Attribute);
+			$attributeQuery->execute();
+			$this->commit();
 	}
-	private function formatParams(array $fields,string $sku):string {	    
+	private function formatParams(string $id,array $fields):string {	    
 		$formatParams = '';
 
 		foreach($fields as $param) {
 			
-			$formatParams .= "($sku,{$param['id']},{$param['value']}),";
+			$formatParams .= "($id,{$param['id']},{$param['value']}),";
 		}
 
 		return substr($formatParams,0,-1);
