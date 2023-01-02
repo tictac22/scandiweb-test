@@ -34,12 +34,14 @@ export const SwitchersText: { [key: string]: ISwitcherForm } = {
 		type: "number",
 		labelText: "Size (MB)",
 		description: "Please, provide disc space in MB.",
+		id: 1,
 	},
 	[Switchers.Book]: {
 		name: "weight",
 		type: "number",
 		labelText: "Weight (KG)",
 		description: "Please, provide weight in Kg.",
+		id: 2,
 	},
 }
 
@@ -48,16 +50,19 @@ export const SwitchersFurniture: ISwitcherForm[] = [
 		name: "height",
 		labelText: "Height (CM)",
 		type: "number",
+		id: 4,
 	},
 	{
 		name: "width",
 		labelText: "Width (CM)",
 		type: "number",
+		id: 5,
 	},
 	{
 		name: "length",
 		labelText: "Length (CM)",
 		type: "number",
+		id: 3,
 	},
 ]
 
@@ -67,7 +72,7 @@ export const SwitcherForm = (props: ISwitcherForm) => {
 		unregister,
 		formState: { errors },
 	} = useFormContext<HookFormValues>()
-	register(`swithcerParam.${props.name}.id`, { value: 3 })
+	register(`swithcerParam.${props.name}.id`, { value: props.id })
 	useEffect(() => {
 		return () => {
 			unregister(`swithcerParam.${props.name}`)

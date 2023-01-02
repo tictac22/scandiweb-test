@@ -18,9 +18,22 @@ export const AddProduct = () => {
 		handleSubmit,
 		watch,
 		formState: { errors },
+		setError,
 	} = methods
-	const onSubmit = (data: HookFormValues) => {
-		console.log(data, "SERVER")
+	const onSubmit = async (body: HookFormValues) => {
+		const request = await fetch("http://localhost/scanditest/createProduct", {
+			method: "POST",
+			body: JSON.stringify(body),
+		})
+		if (!request.ok) {
+			const response = await request.json()
+			console.log(response)
+			if (response?.sku) {
+				setError("sku", { message: response.sku })
+			}
+			console.log(response.error)
+		}
+		const response = await request.json()
 	}
 	const switcher = watch("typeSwitcher")
 

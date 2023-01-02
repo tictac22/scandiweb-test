@@ -36,4 +36,5 @@ export interface IFormInput {
 }
 export interface ISwitcherForm extends IFormInput {
 	description?: string
+	id: number
 }
