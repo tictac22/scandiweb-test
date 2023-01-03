@@ -31,5 +31,9 @@ class Controller {
 			return $response->withStatus(400);
 		}
 	}
-
+	function deleteProducts(ServerRequestInterface $request) {
+		$requestBody = json_decode($request->getBody(),true);
+		$this->service->deleteProducts($requestBody['ids']);
+		return (new Response())->withStatus(200);
+	}
 }

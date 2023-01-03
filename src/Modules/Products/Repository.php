@@ -15,7 +15,9 @@ class Repository extends Db {
 		FROM product 
 		LEFT JOIN product_attribute USING(product_id) 
 		LEFT JOIN attribute ON product_attribute.attribute_id = attribute.attribute_id 
-		GROUP BY(product_id)';
+		GROUP BY(product_id)
+		ORDER BY(product_id) DESC
+		';
 
 		$query = $this->prepare($sql);
 		$query->execute();

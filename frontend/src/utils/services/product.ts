@@ -1,10 +1,11 @@
-import { CREATE_PRODUCT, GET_ALL_PRODUCTS } from "@utils/constants"
+import { CREATE_PRODUCT, DELETE_PRODUCTS, GET_ALL_PRODUCTS } from "@utils/constants"
 import { Product } from "@utils/interfaces"
-import { wrapPromise } from "@utils/wrapPromise"
 
 export class ProductService {
-	static getAll() {
-		return wrapPromise<Product[]>(this.fetchAllProducts())
+	static async getAll() {
+		const request = await fetch(GET_ALL_PRODUCTS)
+		const response: Product[] = await request.json()
+		return response
 	}
 	static async create<T>(body: T) {
 		const request = await fetch(CREATE_PRODUCT, {
@@ -18,9 +19,11 @@ export class ProductService {
 			}
 		}
 	}
-	private static async fetchAllProducts() {
-		const request = await fetch(GET_ALL_PRODUCTS)
-		const response: Product[] = await request.json()
-		return response
+	static async deleteProducts(ids: number[]) {
+		const request = await fetch(DELETE_PRODUCTS, {
+			body: JSON.stringify({ ids }),
+			method: "DELETE",
+		})
+		console.log(request)
 	}
 }

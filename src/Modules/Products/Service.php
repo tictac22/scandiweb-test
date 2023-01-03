@@ -27,4 +27,7 @@ class Service {
 			throw new Error('error on server Side');
 		}
 	}
+	function deleteProducts(array $ids) {
+		return $this->repository->deleteProducts($ids);
+	}
 }

@@ -28,6 +28,9 @@
 		&--delete {
 			margin-left: 10px;
 			background-color: rgb(205, 3, 3);
+			height: 31.5px;
+			display: flex;
+			align-items: center;
 		}
 		&--save {
 			background-color: blue;

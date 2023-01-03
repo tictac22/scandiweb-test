@@ -1,9 +1,9 @@
-import { ProductService } from "@utils/services/product"
+import { getProductsApi } from "@context/product"
 import { Product } from "./Product"
 
-const resourse = ProductService.getAll()
 export const Products = () => {
-	const products = resourse.read()!
+	//const products = resourse.read()!
+	const { products } = getProductsApi()!
 	return (
 		<>
 			{products.map((item) => (

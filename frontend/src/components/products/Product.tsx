@@ -1,11 +1,10 @@
 import "@styles/product.scss"
 import { Attributes as IAttributes, Product as IProduct } from "@utils/interfaces"
+import { ProductCheckBox } from "./ProductCheckbox"
 export const Product = (props: IProduct) => {
 	return (
 		<div className="product">
-			<div>
-				<input type="checkbox" className=".delete-checkbox" />
-			</div>
+			<ProductCheckBox id={props.product_id} />
 			<div className="product__inner">
 				<p>{props.product_sku}</p>
 				<p>{props.name}</p>

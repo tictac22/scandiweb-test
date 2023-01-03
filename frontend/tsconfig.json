@@ -19,7 +19,10 @@
 		"paths": {
 			"@styles/*": ["styles/*"],
 			"@utils/*": ["utils/*"],
-			"@components/*": ["components/*"]
+			"@components/*": ["components/*"],
+			"@hooks/*": ["hooks/*"],
+			"@context/*": ["context/*"],
+			"@assets/*": ["assets/*"]
 		}
 	},
 	"include": ["src"],

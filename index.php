@@ -27,6 +27,7 @@ $router   = (new League\Route\Router)->setStrategy($strategy);
 
 $router->map('GET', '/getAll', $productController . 'getAll');
 $router->map('POST', '/createProduct', $productController . 'createProduct');
+$router->map('DELETE', '/deleteProducts', $productController . 'deleteProducts');
 
 
 $response = $router->dispatch($request);

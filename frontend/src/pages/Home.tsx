@@ -1,19 +1,20 @@
-import { Products } from "@components/Products"
+import { Header } from "@components/header"
+import { Products } from "@components/products"
+import { ProductContext } from "@context/product"
 import "@styles/home.scss"
-import { Suspense } from "react"
-const array = new Array(10).fill(1)
 export const Home = () => {
 	return (
-		<main className="main">
-			<div className="products">
-				<div className="container">
-					<div className="products__inner">
-						<Suspense fallback={<div></div>}>
+		<ProductContext>
+			<Header />
+			<main className="main">
+				<div className="products">
+					<div className="container">
+						<div className="products__inner">
 							<Products />
-						</Suspense>
+						</div>
 					</div>
 				</div>
-			</div>
-		</main>
+			</main>
+		</ProductContext>
 	)
 }

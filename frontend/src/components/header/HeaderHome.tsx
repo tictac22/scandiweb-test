@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import { HeaderHomeDelete } from "./HeaderHomeDelete"
 
 export const HeaderHome = () => {
 	return (
@@ -8,10 +9,7 @@ export const HeaderHome = () => {
 				<Link to="addproduct" className="header__buttons--add button">
 					ADD
 				</Link>
-
-				<button id="delete-product-btn" className="header__buttons--delete button">
-					MASS DELETE
-				</button>
+				<HeaderHomeDelete />
 			</div>
 		</>
 	)
