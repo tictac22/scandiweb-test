@@ -1,3 +1,4 @@
+//https://job-post.store
 export const API_URL = "http://localhost/scanditest"
 
 export const CREATE_PRODUCT = API_URL + "/createProduct"

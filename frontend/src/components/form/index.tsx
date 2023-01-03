@@ -37,7 +37,7 @@ export const Form = () => {
 			setFormStatus((prev) => ({ ...prev, loading: true }))
 			await ProductService.create<HookFormValues>(body)
 			setFormStatus((prev) => ({ ...prev, loading: false, showNotification: true }))
-			await sleep(1000)
+			await sleep(1500)
 			navigate(RoutePaths.Home)
 		} catch (error) {
 			setError("sku", { message: error.message })

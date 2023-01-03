@@ -2,7 +2,7 @@
 
 namespace App\Modules\Products;
 
-use App\System\Errors\ExcSku;
+use App\System\Exceptions\ExcSku;
 use Error;
 
 class Service {
