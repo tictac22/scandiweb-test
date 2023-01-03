@@ -25,3 +25,5 @@ dist-ssr
 
 node_modules
 vendor
+stats.html
+composer.zip

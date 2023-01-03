@@ -3,8 +3,11 @@ import { defineConfig } from "vite"
 
 import { resolve } from "path"
 
+import { terser } from "rollup-plugin-terser"
+import { visualizer } from "rollup-plugin-visualizer"
+
 export default defineConfig({
-	plugins: [react()],
+	plugins: [react(), terser({ format: { comments: false } }), visualizer()],
 	server: {
 		port: 5000,
 	},
