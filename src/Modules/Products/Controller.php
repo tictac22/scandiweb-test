@@ -3,8 +3,6 @@
 
 namespace App\Modules\Products;
 
-use App\System\Exceptions\ExcSku;
-use Laminas\Diactoros\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
