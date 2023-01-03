@@ -9,6 +9,7 @@ use Rakit\Validation\Validator;
 class Validation {
 
 	static function validate(mixed $body,array $rules) {
+		if(!$body) throw new ExcBody('invalid body',['body' => 'body is empty']);
 		$validator = new Validator;
 		$validation = $validator->make($body, $rules);
 		$validation->validate();

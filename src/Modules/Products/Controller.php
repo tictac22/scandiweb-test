@@ -23,11 +23,10 @@ class Controller extends BaseController {
 	}
 
 	function createProduct(ServerRequestInterface $request):ResponseInterface {
-		$body = $request->getBody();	
-		$requestBody = json_decode($body,true);
+		$body = $this->parseBody($request);
 		try {
-			Validator::validate($requestBody,Dto::getDto());
-			$this->service->createProduct($requestBody);
+			Validator::validate($body,Dto::getCreateDto());
+			$this->service->createProduct($body);
 			return $this->sendRequest(201);
 
 		} catch(Throwable $error) {
@@ -38,8 +37,14 @@ class Controller extends BaseController {
 		}
 	}
 	function deleteProducts(ServerRequestInterface $request):ResponseInterface {
-		$requestBody = json_decode($request->getBody(),true);
-		$this->service->deleteProducts($requestBody['ids']);
+		$body = $this->parseBody($request);
+		try {
+			Validator::validate($body,Dto::getDeleteDto());
+		} catch (ExcBody $error) {
+			return $this->sendRequest(400,$error->getErrors());
+		}
+
+		$this->service->deleteProducts($body['ids']);
 		return  $this->sendRequest(200);
 	}
 }
