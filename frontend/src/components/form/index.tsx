@@ -5,6 +5,8 @@ import { options, SwitcherForm, Switchers, SwitchersFurniture, SwitchersText } f
 import { HookFormValues } from "./types"
 
 import { Spinner } from "@assets/Spinner"
+import { Notification } from "@components/Notification"
+import { sleep } from "@utils/functions"
 import { RoutePaths } from "@utils/paths"
 import { ProductService } from "@utils/services/product"
 import { FormProvider, useForm } from "react-hook-form"
@@ -13,7 +15,10 @@ import { schema } from "./schema"
 
 export const Form = () => {
 	const navigate = useNavigate()
-	const [loading, setLoading] = useState(false)
+	const [formStatus, setFormStatus] = useState({
+		loading: false,
+		showNotification: false,
+	})
 	const methods = useForm<HookFormValues>({
 		resolver: zodResolver(schema),
 		criteriaMode: "all",
@@ -24,16 +29,19 @@ export const Form = () => {
 		handleSubmit,
 		watch,
 		formState: { errors },
+		getValues,
 		setError,
 	} = methods
 	const onSubmit = async (body: HookFormValues) => {
 		try {
-			setLoading(true)
+			setFormStatus((prev) => ({ ...prev, loading: true }))
 			await ProductService.create<HookFormValues>(body)
+			setFormStatus((prev) => ({ ...prev, loading: false, showNotification: true }))
+			await sleep(1000)
 			navigate(RoutePaths.Home)
 		} catch (error) {
 			setError("sku", { message: error.message })
-			setLoading(false)
+			setFormStatus((prev) => ({ ...prev, loading: false }))
 		}
 	}
 	const switcher = watch("typeSwitcher")
@@ -66,12 +74,14 @@ export const Form = () => {
 				</div>
 				<Switcher switcherType={switcher} />
 			</form>
-			{loading && (
+			{formStatus.loading && (
 				<div>
 					<p className="loading">Creating product ...</p>
 					<Spinner />
 				</div>
 			)}
+
+			<Notification show={formStatus.showNotification} productName={getValues("name")} />
 		</FormProvider>
 	)
 }
