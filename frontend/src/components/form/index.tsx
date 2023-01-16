@@ -47,7 +47,7 @@ export const Form = () => {
 	const switcher = watch("typeSwitcher")
 	return (
 		<FormProvider {...methods}>
-			<form method="POST" id="product__form" className="form" onSubmit={handleSubmit(onSubmit)}>
+			<form method="POST" id="product_form" className="form" onSubmit={handleSubmit(onSubmit)}>
 				{inputs.map((item) => (
 					<FormInput key={item.name} {...item} />
 				))}

@@ -7,7 +7,7 @@ export const ProductCheckBox = ({ id }: { id: number }) => {
 	}
 	return (
 		<div>
-			<input onChange={handleSetChecked} type="checkbox" className="delete-checkbox" />
+			<input onChange={handleSetChecked} type="checkbox" className="delete-checkbox .delete-checkbox" />
 		</div>
 	)
 }

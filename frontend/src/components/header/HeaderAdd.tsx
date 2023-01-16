@@ -8,7 +8,7 @@ export const HeaderAdd = () => {
 				<button
 					id="delete-product-btn"
 					type="submit"
-					form="product__form"
+					form="product_form"
 					className="header__buttons--save button"
 				>
 					Save
