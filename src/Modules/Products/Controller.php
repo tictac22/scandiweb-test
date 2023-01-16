@@ -10,23 +10,22 @@ use App\System\Exceptions\ExcBody;
 use App\System\Validation as Validator;
 use Throwable;
 
-use App\Modules\_Base\Controller as BaseController;
-class Controller extends BaseController {
+use App\System\Interfaces\IController;
+use Laminas\Diactoros\Response;
 
-	protected Service $service;
-	function __construct()
+class Controller extends Service implements IController {
+
+	function get(): array
 	{
-		$this->service = new Service();
-	}
-	function getAll(): array  {
-		return $this->service->getAll();
+		return $this->getAllProducts();
 	}
 
-	function createProduct(ServerRequestInterface $request):ResponseInterface {
+	function create(ServerRequestInterface $request):ResponseInterface 
+	{
 		$body = $this->parseBody($request);
 		try {
 			Validator::validate($body,Dto::getCreateDto());
-			$this->service->createProduct($body);
+			$this->createProduct($body);
 			return $this->sendRequest(201);
 
 		} catch(Throwable $error) {
@@ -36,7 +35,9 @@ class Controller extends BaseController {
 			return $this->sendRequest(409,['sku' => $error->getMessage()]);
 		}
 	}
-	function deleteProducts(ServerRequestInterface $request):ResponseInterface {
+
+	function delete(ServerRequestInterface $request):ResponseInterface 
+	{
 		$body = $this->parseBody($request);
 		try {
 			Validator::validate($body,Dto::getDeleteDto());
@@ -44,7 +45,19 @@ class Controller extends BaseController {
 			return $this->sendRequest(400,$error->getErrors());
 		}
 
-		$this->service->deleteProducts($body['ids']);
+		$this->deleteProducts($body['ids']);
 		return  $this->sendRequest(200);
+	}
+
+	function sendRequest(int $status,array $body = []):ResponseInterface 
+	{
+		$response = new Response();
+		$response->getBody()->write(json_encode($body));
+		return $response->withStatus($status);
+	}
+	
+	function parseBody(ServerRequestInterface $request):mixed 
+	{
+		return json_decode($request->getBody(),true);
 	}
 }

@@ -6,8 +6,12 @@ include 'init.php';
 
 header('Access-Control-Allow-Origin: *');
 
-$uri = '/scanditest';
-$_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], (strlen(BASE_URI)));
+const isDevelopment = true;
+
+if(isDevelopment) {
+	$uri = '/scanditest';
+	$_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], (strlen(BASE_URI)));
+}
 
 $productController = 'App\Modules\Products\Controller::';
 
@@ -25,9 +29,9 @@ $responseFactory = new Laminas\Diactoros\ResponseFactory();
 $strategy = new League\Route\Strategy\JsonStrategy($responseFactory);
 $router   = (new League\Route\Router)->setStrategy($strategy);
 
-$router->map('GET', '/getAll', $productController . 'getAll');
-$router->map('POST', '/createProduct', $productController . 'createProduct');
-$router->map('DELETE', '/deleteProducts', $productController . 'deleteProducts');
+$router->map('GET', '/getAll', $productController . 'get');
+$router->map('POST', '/createProduct', $productController . 'create');
+$router->map('DELETE', '/deleteProducts', $productController . 'delete');
 
 
 $response = $router->dispatch($request);

@@ -7,7 +7,7 @@ use App\System\Db;
 
 class Repository extends Db {
 
-	function getAll():array
+	function getAllProducts():array
 	{
 		$sql = 'SELECT product.*, 
 		GROUP_CONCAT(attribute.name) AS attributes, 

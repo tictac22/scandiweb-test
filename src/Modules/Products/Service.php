@@ -5,21 +5,17 @@ namespace App\Modules\Products;
 use App\System\Exceptions\ExcSku;
 use Error;
 
-class Service {
+abstract class Service extends Repository {
 
-	protected Repository $repository;
-	function __construct()
+	function getAllProducts():array 
 	{
-		$this->repository = new Repository();
-	}
-	function getAll():array {
-		return $this->repository->getAll();
+		return parent::getAllProducts();
 	}
 
-	function createProduct($fields) {
-
+	function createProduct($fields) 
+	{
 		try {
-			$this->repository->createProduct($fields);
+			parent::createProduct($fields);
 		} catch (\Throwable $th) {
 			if($th->getCode() == 23000) {
 				throw new ExcSku();				
@@ -27,7 +23,9 @@ class Service {
 			throw new Error('error on server Side');
 		}
 	}
-	function deleteProducts(array $ids) {
-		return $this->repository->deleteProducts($ids);
+
+	function deleteProducts(array $ids) 
+	{
+		return parent::deleteProducts($ids);
 	}
 }
